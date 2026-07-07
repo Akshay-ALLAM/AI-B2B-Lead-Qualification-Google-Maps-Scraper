@@ -16,7 +16,7 @@ You need:
 Create a Google Sheet tab called `Leads` with this header row:
 
 ```text
-company_name | city | address | phone | email | website | category | rating | reviews_count | fit_score | fit_reason | outreach_message | status
+company_name | city | address | phone | email | website | category | rating | reviews_count | company_fit_score | company_fit_reason | outreach_message | status
 ```
 
 Recommended formatting:
@@ -80,7 +80,7 @@ Run the workflow manually and confirm:
 - The first Code node outputs clean company fields.
 - Mistral returns valid JSON.
 - The second Code node merges company data with AI output.
-- Google Sheets receives rows with `fit_score`, `fit_reason`, and `outreach_message`.
+- Google Sheets receives rows with `company_fit_score`, `company_fit_reason`, and `outreach_message`.
 
 ## 8. Troubleshooting
 
