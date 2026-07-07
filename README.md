@@ -2,7 +2,7 @@
 
 An n8n automation that finds local B2B leads from Google Maps through Apify, qualifies each business with Mistral AI, generates a personalized outreach opener, and saves the results into Google Sheets.
 
-> Built with **n8n · Apify · Mistral AI · Google Sheets**
+> Built with **n8n - Apify - Mistral AI - Google Sheets**
 
 ## Project Assets
 
@@ -42,8 +42,8 @@ For each business, the sheet stores:
 - category
 - Google rating
 - review count
-- AI fit score
-- AI fit reason
+- AI company fit score
+- AI company fit reason
 - outreach message
 - lead status
 
@@ -86,7 +86,7 @@ The screenshot uses blurred lead rows. Do not publish real prospect data, phone 
 Create a sheet tab with these headers in row 1:
 
 ```text
-company_name | city | address | phone | email | website | category | rating | reviews_count | fit_score | fit_reason | outreach_message | status
+company_name | city | address | phone | email | website | category | rating | reviews_count | company_fit_score | company_fit_reason | outreach_message | status
 ```
 
 The workflow uses `company_name` as the match key for append-or-update behavior. Running the same search again updates the existing row instead of creating a duplicate.

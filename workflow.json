@@ -96,7 +96,7 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=You are a B2B lead qualification assistant. Evaluate whether this business is a good fit for outreach based on the available Google Maps data.\n\nTarget offer:\nReplace this sentence with the product or service you are selling before running the workflow.\n\nCompany data:\nName: {{ $json.company_name }}\nCity: {{ $json.city }}\nCategory: {{ $json.category }}\nRating: {{ $json.rating }}\nReviews count: {{ $json.reviews_count }}\nWebsite: {{ $json.website }}\n\nScoring rules:\n5 = excellent fit and high outreach priority\n4 = strong fit\n3 = possible fit, needs review\n2 = weak fit\n1 = not a fit\n\nReturn ONLY valid JSON with exactly these fields:\n{\n  \"fit_score\": <number 1-5>,\n  \"fit_reason\": \"<one sentence explaining the score>\",\n  \"outreach_message\": \"<one short personalized first-touch message>\"\n}\n\nNo markdown. No extra text. JSON only.",
+        "text": "=You are a B2B lead qualification assistant. Evaluate whether this business is a good fit for outreach based on the available Google Maps data.\n\nTarget offer:\nReplace this sentence with the product or service you are selling before running the workflow.\n\nCompany data:\nName: {{ $json.company_name }}\nCity: {{ $json.city }}\nCategory: {{ $json.category }}\nRating: {{ $json.rating }}\nReviews count: {{ $json.reviews_count }}\nWebsite: {{ $json.website }}\n\nScoring rules:\n5 = excellent fit and high outreach priority\n4 = strong fit\n3 = possible fit, needs review\n2 = weak fit\n1 = not a fit\n\nReturn ONLY valid JSON with exactly these fields:\n{\n  \"company_fit_score\": <number 1-5>,\n  \"company_fit_reason\": \"<one sentence explaining the score>\",\n  \"outreach_message\": \"<one short personalized first-touch message>\"\n}\n\nNo markdown. No extra text. JSON only.",
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -130,7 +130,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const results = [];\n\nfor (let i = 0; i < items.length; i++) {\n  const item = items[i];\n  const company = $('Code in JavaScript').all()[i]?.json || {};\n\n  let raw = item.json.output || '{}';\n  raw = raw.replace(/```json/g, '').replace(/```/g, '').trim();\n\n  let ai;\n  try {\n    ai = JSON.parse(raw);\n  } catch (error) {\n    ai = {\n      fit_score: '',\n      fit_reason: 'AI response could not be parsed as JSON. Review this lead manually.',\n      outreach_message: ''\n    };\n  }\n\n  results.push({\n    json: {\n      company_name: company.company_name || '',\n      city: company.city || '',\n      address: company.address || '',\n      phone: company.phone || '',\n      email: company.email || '',\n      website: company.website || '',\n      category: company.category || '',\n      rating: company.rating || '',\n      reviews_count: company.reviews_count || '',\n      fit_score: ai.fit_score || '',\n      fit_reason: ai.fit_reason || '',\n      outreach_message: ai.outreach_message || '',\n      status: 'New'\n    }\n  });\n}\n\nreturn results;"
+        "jsCode": "const results = [];\n\nfor (let i = 0; i < items.length; i++) {\n  const item = items[i];\n  const company = $('Code in JavaScript').all()[i]?.json || {};\n\n  let raw = item.json.output || '{}';\n  raw = raw.replace(/```json/g, '').replace(/```/g, '').trim();\n\n  let ai;\n  try {\n    ai = JSON.parse(raw);\n  } catch (error) {\n    ai = {\n      company_fit_score: '',\n      company_fit_reason: 'AI response could not be parsed as JSON. Review this lead manually.',\n      outreach_message: ''\n    };\n  }\n\n  results.push({\n    json: {\n      company_name: company.company_name || '',\n      city: company.city || '',\n      address: company.address || '',\n      phone: company.phone || '',\n      email: company.email || '',\n      website: company.website || '',\n      category: company.category || '',\n      rating: company.rating || '',\n      reviews_count: company.reviews_count || '',\n      company_fit_score: ai.company_fit_score || '',\n      company_fit_reason: ai.company_fit_reason || '',\n      outreach_message: ai.outreach_message || '',\n      status: 'New'\n    }\n  });\n}\n\nreturn results;"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -247,8 +247,8 @@
               "canBeUsedToMatch": true
             },
             {
-              "id": "fit_score",
-              "displayName": "fit_score",
+              "id": "company_fit_score",
+              "displayName": "company_fit_score",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -256,8 +256,8 @@
               "canBeUsedToMatch": true
             },
             {
-              "id": "fit_reason",
-              "displayName": "fit_reason",
+              "id": "company_fit_reason",
+              "displayName": "company_fit_reason",
               "required": false,
               "defaultMatch": false,
               "display": true,
