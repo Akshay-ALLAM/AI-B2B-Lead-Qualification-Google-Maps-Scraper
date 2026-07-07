@@ -1,0 +1,33 @@
+# Secrets and local config
+.env
+.env.*
+credentials.json
+credentials/
+*.credentials.json
+n8n-credentials*.json
+
+# Local n8n runtime
+.n8n/
+n8n-data/
+*.sqlite
+*.sqlite3
+logs/
+*.log
+
+# Google/API secrets
+client_secret*.json
+service-account*.json
+*.pem
+*.key
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# Temporary files
+*.tmp
+*.bak
+~$*
